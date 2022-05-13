@@ -38,15 +38,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const hotelRes = await fetchAPI("/hotels", {
-    filters: {
-      slug: params.slug,
-    },
-    populate: "*",
-  });
+  let hotel = [];
 
+  try {
+    const hotelRes = await fetchAPI("/hotels", {
+      filters: {
+        slug: params.slug,
+      },
+      populate: "*",
+    });
+    hotel = hotelRes.data;
+  } catch (error) {
+    console.log(error);
+  }
   return {
-    props: { hotel: hotelRes.data[0] },
+    props: { hotel: hotel[0] },
     revalidate: 1,
   };
 }
