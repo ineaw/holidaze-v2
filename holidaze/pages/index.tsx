@@ -3,7 +3,7 @@ import AccomodationCard from "../component/Accomodation/AccomodationCard";
 
 import Head from "../component/layout/Head";
 import { AccomodationGrid } from "../component/Accomodation/AccomodationGrid";
-import { fetchAPI } from "../lib/api";
+import { fetchAPI } from "../lib/strapiApi";
 import CustomLink from "../component/Link";
 
 const IndexPage = ({ accomRes }) => {

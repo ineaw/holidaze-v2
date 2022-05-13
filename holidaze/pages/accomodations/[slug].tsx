@@ -11,9 +11,9 @@ const Accomodation = ({ hotel }) => {
     <>
       <Stack spacing={8} align="center">
         <Box>
-          <Heading>{hotel.attributes.name}</Heading>
+          <Heading>{hotel.attributes.title}</Heading>
           <Image src={imageUrl} width={200} height={200} />
-          <Text>{hotel.attributes.desicription}</Text>
+          <Text>{hotel.attributes.content}</Text>
           <Text>KR {hotel.attributes.price}</Text>
           <CustomLink href="/accomodation" ChakraComponent={Text}>
             Back
