@@ -2,7 +2,7 @@ import { fetchAPI } from "../../lib/strapiApi";
 import { getStrapiMedia } from "../../lib/strapiMedia";
 import Image from "next/image";
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
-import CustomLink from "../../component/Link";
+import CustomLink from "../../components/layout/Link";
 
 const Accomodation = ({ hotel }) => {
   const imageUrl = getStrapiMedia(hotel.attributes.image);

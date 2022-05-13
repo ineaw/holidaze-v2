@@ -6,7 +6,7 @@ import { Box, chakra, Flex, Stack, Button, IconButton, Text, CloseButton, Contai
 import { FiMenu } from "react-icons/fi";
 import { useViewportScroll } from "framer-motion";
 
-import CustomLink from "../Link";
+import CustomLink from "../layout/Link";
 
 const Navbar: NextComponentType = () => {
   const { data: session, status } = useSession();

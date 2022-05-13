@@ -1,8 +1,8 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const fontSizes = {
-  custom1: "6rem",
-  sm: "1.3rem",
+  headerHero: "6rem",
+  sm: "1rem",
 };
 
 const theme = extendTheme({ fontSizes });

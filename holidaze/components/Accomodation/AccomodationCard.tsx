@@ -1,6 +1,6 @@
 import { AspectRatio, Box, Button, HStack, Image, Link as _Link, Skeleton, Stack, StackProps, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { getStrapiMedia } from "../../lib/strapiMedia";
-import CustomLink from "../Link";
+import CustomLink from "../layout/Link";
 
 export default function AccomodationCard({ place }) {
   const imageUrl = getStrapiMedia(place.attributes.image);

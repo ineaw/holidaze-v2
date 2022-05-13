@@ -4,9 +4,8 @@ import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Head from "../../component/layout/Head";
-
-import UploadImage from "../../component/UploadImage";
+import Head from "../../components/layout/Head";
+import UploadImage from "../../components/MyAccount/UploadImage";
 
 import axios from "axios";
 import * as Yup from "yup";
@@ -77,7 +76,7 @@ const CreateAccomodation = () => {
         duration: 3000,
       });
 
-      router.push(`/hotels`);
+      router.push(`/accomodations`);
     } catch (error) {
       const errorObj = { error };
 
@@ -106,11 +105,11 @@ const CreateAccomodation = () => {
   return (
     <>
       <Head title="Create" />
-      <Container my="2em" textAlign={["start", "start", "center"]}>
+      <Container my="2em" textAlign={["center", "center", "center"]}>
         <Heading as="h1" fontSize="2rem" letterSpacing="1px">
           Upload
         </Heading>
-        <Text as="h3" fontSize="1rem" letterSpacing="0.5px">
+        <Text as="h2" fontSize="1rem" letterSpacing="0.5px">
           Add a new accomodation
         </Text>
       </Container>
@@ -136,7 +135,7 @@ const CreateAccomodation = () => {
                   Submit
                 </Button>
                 <Stack direction="column">
-                  <Button size="sm" colorScheme="red" onClick={handleReset} disabled={isSubmitting}>
+                  <Button size="sm" colorScheme="orange" onClick={handleReset} disabled={isSubmitting}>
                     Clear
                   </Button>
                   <Link href={"/my-account"} passHref>

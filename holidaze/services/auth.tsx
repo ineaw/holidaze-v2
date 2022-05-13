@@ -1,9 +1,8 @@
 import axios from "axios";
-
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+import { getStrapiURL } from "../lib/strapiApi";
 
 export async function signIn({ email, password }) {
-  const res = await axios.post(`${strapiUrl}api/auth/local`, {
+  const res = await axios.post(`${getStrapiURL}api/auth/local`, {
     identifier: email,
     password,
   });

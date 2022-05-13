@@ -2,7 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 
 import theme from "../theme";
-import Layout from "../component/layout";
+import Layout from "../components/layout";
 
 import type { AppProps } from "next/app";
 

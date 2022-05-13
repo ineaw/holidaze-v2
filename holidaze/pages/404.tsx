@@ -1,5 +1,5 @@
 import { Button, Text } from "@chakra-ui/react";
-import CustomLink from "../component/Link";
+import CustomLink from "../components/layout/Link";
 
 export default function NotFound() {
   return (

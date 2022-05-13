@@ -1,7 +1,7 @@
 import { Heading, Text, Box } from "@chakra-ui/react";
-import AccomodationCard from "../component/Accomodation/AccomodationCard";
-import Head from "../component/layout/Head";
-import { AccomodationGrid } from "../component/Accomodation/AccomodationGrid";
+import AccomodationCard from "../components/Accomodation/AccomodationCard";
+import Head from "../components/layout/Head";
+import { AccomodationGrid } from "../components/Accomodation/AccomodationGrid";
 import { fetchAPI } from "../lib/strapiApi";
 
 const AccomodationPage = ({ hotels }) => {
