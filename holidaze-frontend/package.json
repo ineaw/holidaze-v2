@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.1",
-    "@chakra-ui/react": "^2.1.2",
+    "@chakra-ui/react": "2.0.0",
     "@choc-ui/chakra-autocomplete": "^4.22.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -22,6 +22,7 @@
     "react": "18.1.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.1.0",
+    "react-icons": "^4.3.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

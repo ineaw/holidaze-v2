@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react";
-import ContactForm from "../components/form-components/ContactForm";
-import Layout from "../components/layout/Layout";
-import { useFetchUser } from "../lib/authContext";
+import ContactForm from "../components/admin/contact/ContactForm";
+import { useFetchUser } from "../context/authContext";
+import Layout from "../components/layout/index";
 
 export default function Contact() {
   const { user, loading } = useFetchUser();

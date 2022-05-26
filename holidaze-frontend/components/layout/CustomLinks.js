@@ -42,4 +42,4 @@ export function NavLink({ href, activeProps, children, _hover, ...props }) {
   )
 }
 
-export default NavLink 
+

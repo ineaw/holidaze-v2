@@ -16,8 +16,8 @@ import {
   } from "@chakra-ui/react";
   // import Link from "next/link";
   import { GrLocation } from "react-icons/gr";
-  import CustomLink from "./CustomLink";
   import NextLink from "next/link";
+  import { CustomLink } from "./CustomLinks";
   
   export default function Hero() {
     return (

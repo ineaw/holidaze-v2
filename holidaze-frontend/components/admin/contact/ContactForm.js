@@ -14,9 +14,9 @@ import axios from "axios";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { API_URL } from "../../config";
+import { API_URL } from "../../../config";
 
-import TextField from "./TextField";
+import TextField from "../../formComponents/TextField";
 
 const ContactForm = () => {
   const router = useRouter();

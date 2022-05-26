@@ -26,15 +26,13 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-import CustomLink from "./CustomLink";
-
+import { CustomLink } from "./CustomLinks";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { fetcher } from "../../lib/api";
 import { setToken, unsetToken } from "../../lib/auth";
-import { useUser } from "../../lib/authContext";
+import { useUser } from "../../context/authContext";
 import { API_URL } from "../../config";
 
 const NavBar = () => {
