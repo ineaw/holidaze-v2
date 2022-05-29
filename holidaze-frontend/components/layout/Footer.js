@@ -1,13 +1,17 @@
-import { Box, Container, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, Text, Image } from "@chakra-ui/react";
 import Link from "next/link";
 
 const Logo = (_props) => {
-  return <Heading>Holidaze</Heading>;
+  return <Image
+  src="/images/logo-holidaze-dark.png"
+  height={"60px"}
+  width={"170px"}
+/>
 };
 
 export default function Footer() {
   return (
-    <Box bg={"body.light"}>
+    <Box bg={"body.light"} my={4}>
       <Container
         as={Stack}
         maxW={"6xl"}

@@ -7,7 +7,7 @@ export default function PageHead({ title = "" }) {
 				{title}
 				{title ? " | " : ""} Holidaze
 			</title>
-			<link rel="icon" href="/favicon.ico" />
+			<link rel="icon" href="/images/holidaze-favicon.png" />
 		</NextHead>
 	);
 }

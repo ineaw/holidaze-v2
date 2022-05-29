@@ -4,7 +4,7 @@ import { fetcher } from './api';
 import { API_URL } from 'lib';
 
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const setToken = (data) => {
@@ -107,3 +107,6 @@ export const getIdFromServerCookie = (req) => {
   const id = idCookie.split('=')[1];
   return id;
 };
+
+
+// from strapi tutorial

@@ -1,23 +1,4 @@
-import {
-  Stack,
-  Flex,
-  Button,
-  Heading,
-  Text,
-  VStack,
-  Box,
-  useBreakpointValue,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  FormLabel,
-  Link,
-  useColorModeValue,
-} from "@chakra-ui/react";
-// import Link from "next/link";
-import { GrLocation } from "react-icons/gr";
-import NextLink from "next/link";
-import { CustomLink } from "./CustomLinks";
+import { Flex, Heading, VStack, useBreakpointValue } from "@chakra-ui/react";
 
 export default function SubHero() {
   return (
@@ -29,6 +10,7 @@ export default function SubHero() {
           "url(https://images.unsplash.com/photo-1569417921961-edf9477063de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1571&q=80)"
         }
         backgroundSize={"cover"}
+        alt="Bergen harbour at night"
         backgroundPosition={"center center"}
       >
         <VStack
@@ -45,7 +27,7 @@ export default function SubHero() {
             textAlign={"center"}
             fontSize={useBreakpointValue({ base: "3xl", md: "5xl" })}
           >
-              Contact us
+            Contact us
           </Heading>
         </VStack>
       </Flex>

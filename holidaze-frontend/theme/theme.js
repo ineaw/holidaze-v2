@@ -3,7 +3,8 @@ import { createBreakpoints } from "@chakra-ui/theme-tools";
 
 
 
-const fonts = { mono: `'Menlo', monospace` };
+const fonts = { mono: `'Menlo', monospace`,
+sans: `'manofa', sans-serif` };
 
 const breakpoints = createBreakpoints({
   sm: "20em",
@@ -41,6 +42,7 @@ const theme = extendTheme({
   fontSizes,
   fonts,
   breakpoints,
+  fonts,
   styles: {
     global: {
       // styles for the `body`

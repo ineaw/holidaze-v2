@@ -10,6 +10,7 @@ import {
   IconButton,
   CloseButton,
   Heading,
+  Image,
   Center,
   HStack,
   useBreakpointValue,
@@ -25,6 +26,7 @@ import { CustomLink, CustomNavLink } from "./CustomLinks";
 import NextLink from "next/link";
 import { setToken, unsetToken } from "../../lib/auth";
 import { useUser } from "../../context/authContext";
+import { FiLogOut } from "react-icons/fi";
 
 const NavBar = () => {
   const { user, loading } = useUser();
@@ -56,9 +58,6 @@ const NavBar = () => {
     // },
   ];
 
-  const Logo = (_props) => {
-    return <Heading>Holidaze</Heading>;
-  };
 
   const logout = () => {
     unsetToken();
@@ -175,7 +174,13 @@ const NavBar = () => {
               <HStack spacing={8} alignItems={"center"}>
                 <Box>
                   <NextLink href="/" passHref>
-                    <Link>Logo </Link>
+                    <Link>
+                    <Image
+                      src="/images/logo-holidaze.png"
+                      height={"40px"}
+                      width={"full"}
+                    />{" "}
+                    </Link>
                   </NextLink>
                 </Box>
                 <HStack
@@ -291,9 +296,15 @@ const NavBar = () => {
                 onClick={mobileNav.onOpen}
               />
               <Box>
-                <NextLink href="/" passhref>
-                  <Link>Logo</Link>
-                </NextLink>
+              <NextLink href="/" passHref>
+                    <Link>
+                    <Image
+                      src="/images/logo-holidaze.png"
+                      height={"40px"}
+                      width={"full"}
+                    />{" "}
+                    </Link>
+                  </NextLink>
               </Box>
 
               {!loading &&
@@ -312,27 +323,23 @@ const NavBar = () => {
                       {userHeading}
                       <MenuDivider />
                       <Box my={2}>
-                        <CustomLink href="/dashboard" passhref>Dashboard</CustomLink >{" "}
+                        <CustomLink href="/dashboard" passhref>
+                          Dashboard
+                        </CustomLink>{" "}
                       </Box>
                       <Box my={2}>
                         <CustomLink href="/dashboard/enquiries" my={6} passhref>
-                          <Link>
-                          Enquiries
-                          </Link>
+                          <Link>Enquiries</Link>
                         </CustomLink>{" "}
                       </Box>
                       <Box my={2}>
                         <CustomLink href="/dashboard/email" my={4} passhref>
-                          <Link>
-                          Emails
-                          </Link>
+                          <Link>Emails</Link>
                         </CustomLink>{" "}
                       </Box>
                       <Box my={2}>
                         <CustomLink href="/dashboard/create" my={4} passhref>
-                          <Link>
-                          Manage listing
-                          </Link>
+                          <Link>Manage listing</Link>
                         </CustomLink>{" "}
                       </Box>
                       <MenuDivider />

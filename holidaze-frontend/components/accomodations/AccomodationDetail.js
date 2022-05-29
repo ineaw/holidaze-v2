@@ -87,9 +87,6 @@ export default function AccomodationDetail({ accom }) {
               divider={<StackDivider />}
             >
               <VStack spacing={{ base: 4, sm: 6 }}>
-                <Text fontSize={"2xl"} fontWeight={"300"}>
-                  {accom.attributes.description}
-                </Text>
                 <Text fontSize={"lg"}>{accom.attributes.description}</Text>
               </VStack>
               <Box>
@@ -115,9 +112,7 @@ export default function AccomodationDetail({ accom }) {
                     No
                   </ListItem>
                   <ListItem>
-                    <Text fontWeight={"bold"}>
-                      facilities:
-                    </Text>{" "}
+                    <Text fontWeight={"bold"}>facilities:</Text>{" "}
                     {accom.attributes.facilities}
                   </ListItem>
                   <ListItem>

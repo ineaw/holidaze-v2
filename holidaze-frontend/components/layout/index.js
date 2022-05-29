@@ -15,7 +15,7 @@ const Layout = ({ user, loading = false, children }) => {
       <UserProvider value={{ user, loading }}>
         <NavBar />
         {router.pathname === "/" && <Hero />}
-        {router.pathname === "/contact" && <SubHero />}
+        {/* {router.pathname === "/contact" && <SubHero />} */}
         <Container>{children}</Container>
         <Footer />
       </UserProvider>

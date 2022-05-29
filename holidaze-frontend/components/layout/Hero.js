@@ -15,9 +15,7 @@ import {
     useColorModeValue,
   } from "@chakra-ui/react";
   // import Link from "next/link";
-  import { GrLocation } from "react-icons/gr";
   import NextLink from "next/link";
-  import { CustomLink } from "./CustomLinks";
   
   export default function Hero() {
     return (
@@ -26,8 +24,7 @@ import {
           maxW={"full"}
           h={"60ch"}
           backgroundImage={
-            "url(https://images.unsplash.com/photo-1569417921961-edf9477063de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1571&q=80)"
-          }
+            "url(/images/hero-main.jpg)"}
           backgroundSize={"cover"}
           backgroundPosition={"center top"}
         >
@@ -43,6 +40,7 @@ import {
               fontWeight={700}
               lineHeight={1.2}
               textAlign={"center"}
+              fontFamily={"sans"}
               fontSize={useBreakpointValue({ base: "3xl", md: "5xl" })}
             >
               Take your next Holidaze to Bergen
@@ -55,7 +53,6 @@ import {
                 my={12}
               >
                 <FormLabel textAlign={"center"}> Find your accommodation in Bergen</FormLabel>
-  
                 <Stack
                   align={"center"}
                   spacing={4}

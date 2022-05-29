@@ -38,7 +38,7 @@ export default function AccomodationsPage({ accomodations, page, pageCount }) {
     <>
       <Layout user={user}>
         <PageHead title="Accomodations" />
-        <Heading as="h1" textAlign="center" marginBottom={24}>
+        <Heading as="h1" textAlign="center" my={12} fontFamily="sans">
           {" "}
           Accomodation in Bergen
         </Heading>
