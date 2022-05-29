@@ -1,19 +1,26 @@
 import {
   Box,
   Flex,
-  Avatar,
+  chakra,
   Button,
   FormControl,
   FormLabel,
   Stack,
   Icon,
-  chakra,
+  Container,
+  Heading,
+  useColorModeValue,
   VisuallyHidden,
+  Text,
 } from "@chakra-ui/react";
 import { HiOutlineTrash, HiUpl } from "react-icons/hi";
+import { FaUser } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Formik, Form } from "formik";
 
 import { useState } from "react";
-import { API_URL } from "../../config";
+import { API_URL } from "../../../lib";
 
 export default function ImageUpload({ accomId, imageUploaded }) {
   const [image, setImage] = useState(null);
@@ -46,6 +53,8 @@ export default function ImageUpload({ accomId, imageUploaded }) {
 
     if (res.ok) {
       imageUploaded();
+      toast.success("Your Image was created Successfully");
+      setTimeout(() => {}, 3000);
     }
   };
 
@@ -55,77 +64,18 @@ export default function ImageUpload({ accomId, imageUploaded }) {
 
   return (
     <>
-      <h1>Upload Image</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input type="file" onChange={handleFileChange} />
-        </div>
-        <input type="submit" value="Upload" />
-      </form>
-      <chakra.form
-        method="PUT"
-        shadow="base"
-        rounded={[null, "md"]}
-        overflow={{ sm: "hidden" }}
-      >
-        <FormControl>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color={useColorModeValue("gray.700", "gray.50")}
-          >
-            Image
-          </FormLabel>
-          <Flex alignItems="center" mt={1}>
-            <Avatar
-              boxSize={12}
-              bg={useColorModeValue("gray.100", "gray.800")}
-              icon={
-                <Icon
-                  as={FaUser}
-                  boxSize={9}
-                  mt={3}
-                  rounded="full"
-                  color={useColorModeValue("gray.300", "gray.700")}
-                />
-              }
-            />
-            <Button
-              type="button"
-              ml={5}
-              variant="outline"
-              size="sm"
-              fontWeight="medium"
-              _focus={{ shadow: "none" }}
-            >
-              Change
-            </Button>
-          </Flex>
-        </FormControl>
-        <FormControl>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color={useColorModeValue("gray.700", "gray.50")}
-          >
-            Cover photo
-          </FormLabel>
-          <Flex
-            mt={1}
-            justify="center"
-            px={6}
-            pt={5}
-            pb={6}
-            borderWidth={2}
-            borderColor={useColorModeValue("gray.300", "gray.500")}
-            borderStyle="dashed"
-            rounded="md"
-          >
+      <ToastContainer />
+      <Container textAlign="center" my="8">
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <FormLabel fontSize="md" textAlign="center" my={6}>
+              Image upload
+            </FormLabel>
             <Stack spacing={1} textAlign="center">
               <Icon
                 mx="auto"
                 boxSize={12}
-                color={useColorModeValue("gray.400", "gray.500")}
+                color={"gray.500"}
                 stroke="currentColor"
                 fill="none"
                 viewBox="0 0 48 48"
@@ -140,61 +90,45 @@ export default function ImageUpload({ accomId, imageUploaded }) {
               </Icon>
               <Flex
                 fontSize="sm"
-                color={useColorModeValue("gray.600", "gray.400")}
+                color={"gray.600"}
                 alignItems="baseline"
               >
                 <chakra.label
-                  htmlFor="file-upload"
+                  htmlFor="file"
                   cursor="pointer"
                   rounded="md"
                   fontSize="md"
-                  color={useColorModeValue("brand.600", "brand.200")}
+                  color={("brand.dark")}
                   pos="relative"
                   _hover={{
-                    color: useColorModeValue("brand.400", "brand.300"),
+                    color: ("brand.bright"),
                   }}
                 >
-                  <span>Upload a file</span>
+                  <span>Press to here upload a file</span>
                   <VisuallyHidden>
-                    <input id="file-upload" name="file-upload" type="file" />
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      onChange={handleFileChange}
+                    />
                   </VisuallyHidden>
                 </chakra.label>
-                <Text pl={1}>or drag and drop</Text>
+                <Text pl={1}> up to 200kb</Text>
               </Flex>
               <Text
                 fontSize="xs"
                 color={useColorModeValue("gray.500", "gray.50")}
               >
-                PNG, JPG, GIF up to 10MB
+                You can only upload an image once
               </Text>
             </Stack>
-          </Flex>
-        </FormControl>
-        <Box
-          px={{ base: 4, sm: 6 }}
-          py={3}
-          bg={useColorModeValue("gray.50", "gray.900")}
-          textAlign="right"
-        >
-          <Button
-            type="submit"
-            colorScheme="brand"
-            _focus={{ shadow: "" }}
-            fontWeight="md"
-          >
-            Save
+          </FormControl>
+          <Button mt={4} type="submit" value="Upload">
+            Click to set image
           </Button>
-        </Box>
-
-        <Box visibility={{ base: "hidden", sm: "visible" }} aria-hidden="true">
-          <Box py={5}>
-            <Box
-              borderTop="solid 1px"
-              borderTopColor={useColorModeValue("gray.200", "whiteAlpha.200")}
-            ></Box>
-          </Box>
-        </Box>
-      </chakra.form>
+        </form>
+      </Container>
     </>
   );
 }

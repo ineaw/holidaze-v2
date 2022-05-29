@@ -1,28 +1,34 @@
 import Link from "next/link";
-import Image from "next/image";
-import { API_URL } from "../../config";
+import { API_URL } from "../../lib";
 import { useRouter } from "next/router";
-// import CategoryNav from "../../components/Layout/CategoryNav";
 import AccomodationDetail from "../../components/Accomodations/AccomodationDetail";
-// import { fetcher } from '../../lib/api';
-// import {
-//   getTokenFromLocalCookie,
-//   getTokenFromServerCookie,
-//   getUserFromLocalCookie,
-// } from '../../lib/auth';
-// import { useFetchUser } from '../../lib/authContext';
-import Layout from "../../components/layout/Layout";
-import { Button } from "@chakra-ui/button";
-import { HiOutlineTrash } from "react-icons/hi";
+import {
+  getTokenFromLocalCookie,
+  getTokenFromServerCookie,
+  getUserFromLocalCookie,
+} from "../../lib/auth";
+import { useFetchUser } from "../../context/authContext";
+import Layout from "../../components/layout";
+import {
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Breadcrumb,
+  ButtonGroup,
+  IconButton,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
+import { HiOutlineTrash, HiPencil } from "react-icons/hi";
+import { CustomLink } from "../../components/layout/CustomLinks";
+import PageHead from "@/components/layout/PageHead";
 
 export default function AccomodationPage({ accom, categories, jwt, error }) {
-  // const { data: session, status } = useSession();
-//   const { user, loading } = useFetchUser();
+  const { user, loading } = useFetchUser();
 
   const router = useRouter();
 
   const deleteEvent = async (e) => {
-    if (confirm("Are you sure ?")) {
+    if (confirm("Are you sure you want to delete this accomodation?")) {
       const res = await fetch(`${API_URL}/api/accomodations/${accom.id}`, {
         method: "DELETE",
       });
@@ -41,29 +47,57 @@ export default function AccomodationPage({ accom, categories, jwt, error }) {
     if (!user) {
       return false;
     }
+
     return (
-      <div>
-        <div>
-          <Link href={`/accomodations/edit/${accom.id}`}>
-            <a>Edit</a>
-          </Link>
-          <Button onClick={deleteEvent}>
-            Delete
-          </Button>
-        </div>
-      </div>
+      <>
+        <Flex direction="row" justifyContent="flex-end">
+          <Box>
+            <ButtonGroup variant="solid" size="sm" spacing={3}>
+              <CustomLink href={`/accomodations/edit/${accom.id}`}>
+                <IconButton variant='outline' colorScheme="green" icon={<HiPencil />} />
+              </CustomLink>
+              <IconButton
+                colorScheme="red"
+                variant="outline"
+                icon={<HiOutlineTrash />}
+                onClick={deleteEvent}
+              >
+                Delete
+              </IconButton>
+            </ButtonGroup>
+          </Box>
+        </Flex>
+      </>
     );
   };
 
   return (
     <>
-    <Layout user={user}>
-      {/* <CategoryNav categories={categories} /> */}
-      {EditButtons()}
-      <Link href="/accomodations">
-        <a>Go Back</a>
-      </Link>
-      <AccomodationDetail accom={accom} />
+      <Layout user={user}>
+        {/* <CategoryNav categories={categories} /> */}
+        <PageHead title={accom.name} />
+        <Box
+          px={{ sm: 2, base: 4, md: 8 }}
+          py={{ sm: 6, base: 8, md: 14, lg: 20 }}
+        >
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href={"/"}>
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href={"/accomodations"}>
+                Accomodations
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink _disabled>{accom.attributes.name}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          {!loading && (user ? <>{EditButtons()}</> : "")}
+          <AccomodationDetail accom={accom} />
+        </Box>
       </Layout>
     </>
   );

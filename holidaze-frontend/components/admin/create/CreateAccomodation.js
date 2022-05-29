@@ -3,93 +3,62 @@ import {
   Stack,
   Box,
   Heading,
-  useToast,
+  ButtonGroup,
   Text,
   FormLabel,
   Flex,
   useColorModeValue,
   IconButton,
   Center,
+  Container,
+  NumberInputField,
+  NumberInput,
+  InputRightElement,
 } from "@chakra-ui/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { HiStar, HiOutlineStar } from "react-icons/hi";
 import * as Yup from "yup";
-import TextField from "../../components/form-components/TextField";
-import { API_URL } from "../../config";
-import Layout from "../../components/layout/Layout";
-import { useUser, useFetchUser } from "../../lib/authContext";
 
-const NewAccomodation = ({ id, token }) => {
-  const { user, loading } = useFetchUser();
+import { TextField } from "@/components/formComponents/FormFields";
+import { API_URL } from "../../../lib";
 
+export default function CreateAccomodation() {
   const [values, setValues] = useState({
     name: "",
     address: "",
-    date: "",
+    price: 0,
     description: "",
+    facilities: "",
+    room_type: "",
     rating: 0,
-    category: "",
-    //   jwt: token.jwt,
+    beds: 0,
   });
   const router = useRouter();
-  const toast = useToast();
-
-  // const { push } = useRouter()
 
   const handleCreate = async (values) => {
-    try {
-      const res = await fetch(`${API_URL}/api/accomodations?=*`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${jwt}`,
-        },
-        body: JSON.stringify({ data: { ...values } }),
-      });
-      if (responseData.message === "success") {
-        toast({
-          position: "top",
-          render: () => (
-            <Box
-              borderRadius={"0.3em"}
-              backgroundColor={"#40916c"}
-              padding="2em"
-              mx="auto"
-            >
-              <Text color={"black"} fontWeight={"700"}>
-                Successfully Posted
-              </Text>
-            </Box>
-          ),
-          duration: 3000,
-        });
-        const accomodation = await res.json();
+    const res = await fetch(`${API_URL}/api/accomodations?populate=*`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({ data: { ...values } }),
+    });
+
+    if (!res.ok) {
+      toast.error("Something Went Wrong");
+    } else {
+      const accomodation = await res.json();
+      toast.success("Your listing was created Successfully");
+      setTimeout(() => {
         router.push(`/accomodations/${accomodation.data.attributes.slug}`);
-      }
-    } catch (error) {
-      toast({
-        position: "top",
-        render: () => (
-          <Box
-            borderRadius={"0.3em"}
-            backgroundColor={"red.300"}
-            padding="2em"
-            mx="auto"
-          >
-            <Text color={"black"} fontWeight={"700"}>
-              Post error
-            </Text>
-            <Text color={"black"}>Try again...</Text>
-          </Box>
-        ),
-        duration: 3000,
-      });
+      }, 3000);
     }
-    console.error(JSON.stringify(error));
-    // clearAlert();
   };
 
   const validateForm = Yup.object({
@@ -99,108 +68,182 @@ const NewAccomodation = ({ id, token }) => {
     address: Yup.string()
       .matches(/^.{1,30}$/gm, "Maximum character reached")
       .required("Address is Required"),
-    category: Yup.string().required("category is Required"),
+    rating: Yup.number().min(1).max(5).required("Between 1-5 stars"),
+    beds: Yup.number().required("Minimum 1 bed").positive().integer(),
+    price: Yup.number().required().positive().integer(),
+    description: Yup.string()
+      .min(10, "Must be more than 10 characters")
+      .required("This field is requried"),
+    room_type: Yup.string()
+      .min(2, "Must be more than 2 characters")
+      .required("This field is requried"),
+    facilities: Yup.string()
+      .min(2, "Must be more than 2 characters")
+      .required("This field is requried"),
   });
 
-  const category = ["Cabin", "Hotel", "Bed & Breakfast"];
   const stars = [1, 2, 3, 4, 5];
 
   return (
     <>
-      <Layout user={user}>
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
-          <Stack spacing={4}>
-            <Formik
-              initialValues={{
-                values,
-              }}
-              validationSchema={validateForm}
-              onSubmit={handleCreate}
-            >
-              {({
-                isSubmitting,
-                handleSubmit,
-                handleReset,
-                values,
-                setFieldValue,
-              }) => (
-                <Form onSubmit={handleSubmit}>
-                  <Box>
-                    <FormLabel>name</FormLabel>
-                    <TextField placeholder="name" name="name" />
-                  </Box>
-                  <Box>
-                    <FormLabel>address</FormLabel>
-                    <TextField placeholder="address" name="address" />
-                  </Box>
-                  <Box my="2em">
-                    <FormLabel>Category</FormLabel>
-                    <TextField
-                      selectField={category}
-                      placeholder="category"
-                      name="category"
-                    />
-                  </Box>
-                  <Box my="2em">
-                    <FormLabel>Rating</FormLabel>
-                    <Stack direction={"row"}>
-                      {stars.map((star) => (
-                        <IconButton
-                          key={star}
-                          fontSize="2em"
-                          variant={"ghost"}
-                          aria-label="star"
-                          onClick={() => setFieldValue("rating", star)}
-                          icon={
-                            values.rating >= star ? (
-                              <AiFillStar color="rgb(221, 227, 146)" />
-                            ) : (
-                              <AiOutlineStar />
-                            )
-                          }
-                        />
-                      ))}
-                    </Stack>
-                  </Box>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Button
-                      isLoading={isSubmitting}
-                      disabled={isSubmitting}
-                      loadingText="Submitting"
-                      size="lg"
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
-                    <Stack direction="column">
-                      <Button
-                        size="sm"
-                        colorScheme="orange"
-                        onClick={handleReset}
-                        disabled={isSubmitting}
-                      >
-                        Clear
-                      </Button>
-                      <Link href={"/dashboard"} passHref>
-                        <Button size="sm" disabled={isSubmitting}>
-                          Cancel
-                        </Button>
-                      </Link>
-                    </Stack>
+      <Container centerContent>
+        <ToastContainer />
+        <Heading fontWeight="normal" m={8} letterSpacing="tight">
+          List a new accomodation
+        </Heading>
+        <Flex px={24} px={[4, 24]} py={12} mb={8}>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} center="true">
+
+          <Formik
+            initialValues={{
+              name: "",
+              address: "",
+              price: 0,
+              description: "",
+              room_type: "",
+              rating: 0,
+              beds: 0,
+              facilities: "",
+            }}
+            validationSchema={validateForm}
+            onSubmit={handleCreate}
+          >
+            {({
+              isSubmitting,
+              handleSubmit,
+              handleReset,
+              values,
+              setFieldValue,
+              setValues,
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <Box>
+                  <FormLabel>Name</FormLabel>
+                  <TextField
+                    placeholder="Name of Accomodation"
+                    name="name"
+                    value={values}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel>Address</FormLabel>
+                  <TextField
+                    placeholder="Address"
+                    name="address"
+                    value={values}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel>Room type</FormLabel>
+                  <TextField
+                    placeholder="Room type"
+                    name="room_type"
+                    value={values}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel>Facilities</FormLabel>
+                  <TextField
+                    placeholder="Facilities"
+                    name="facilities"
+                    value={values}
+                  />
+                </Box>
+                <Box>
+                  <FormLabel>Description</FormLabel>
+                  <TextField
+                    placeholder="Description"
+                    name="description"
+                    value={values}
+                    textbox
+                  />
+                </Box>
+                <Flex direction="row" justifyContent="space-evenly" >
+                <Box>
+                  <FormLabel>Beds</FormLabel>
+                  <NumberInput
+                    defaultValue={2}
+                    name="beds"
+                    min={0}
+                    onChange={(e) => setFieldValue("beds", e)}
+                    maxW={"6rem"}
+                    errorBorderColor="red.300"
+                    bg="#fff"
+                    borderColor="brand.text"
+                  >
+                    <NumberInputField />
+                  </NumberInput>
+                </Box>
+             
+                <Box>
+                  <FormLabel>Price</FormLabel>
+                  <NumberInput
+                    defaultValue={0}
+                    name="price"
+                    min={0}
+                    onChange={(e) => setFieldValue("price", e)}
+                    maxW={"6rem"}
+                    errorBorderColor="red.300"
+                    bg="#fff"
+                    borderColor="brand.text"
+                  >
+                    <NumberInputField />
+                    <InputRightElement children="NOK" />
+                  </NumberInput>
+                </Box>
+                </Flex>
+                <Box my="2em">
+                  <FormLabel>Rating</FormLabel>
+                  <Stack direction={"row"}>
+                    {stars.map((star) => (
+                      <IconButton
+                        key={star}
+                        fontSize="2em"
+                        variant={"ghost"}
+                        aria-label="star"
+                        onClick={() => {
+                          return setFieldValue("rating", star);
+                        }}
+                        icon={
+                          values.rating >= star ? (
+                            <HiStar color="orange" />
+                          ) : (
+                            <HiOutlineStar color="orange" />
+                          )
+                        }
+                      />
+                    ))}
                   </Stack>
-                </Form>
-              )}
-            </Formik>
-          </Stack>
-        </Box>
-      </Layout>
+                </Box>
+                <ButtonGroup spacing={2}>
+                  <Button
+                    bg="brand.dark"
+                    color="body.light"
+                    _hover={{
+                      bg: "brand.darkhover",
+                    }}
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                    loadingText="Submitting"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    colorScheme="brand.dark"
+                    onClick={handleReset}
+                    isDisabled={isSubmitting}
+                  >
+                    Clear
+                  </Button>
+                </ButtonGroup>
+              </Form>
+            )}
+          </Formik>
+          </Box>
+        </Flex>
+      </Container>
     </>
   );
-};
-
-export default NewAccomodation;
+}

@@ -1,19 +1,22 @@
 import Link from "next/link";
-
+import { CustomLink } from "./CustomLinks";
+import { ButtonGroup } from "@chakra-ui/button";
 export default function Pagination({ page, pageCount }) {
   return (
     <>
+    <ButtonGroup variant="solid" size="sm" spacing={3}>
       {page > 1 && (
-        <Link href={`/accomodations?page=${page - 1}`}>
-          <a>Previous</a>
-        </Link>
+        <CustomLink href={`/accomodations?page=${page - 1}`} ChakraComponent={"Button"} >
+          Previous page
+        </CustomLink>
       )}
 
       {page < pageCount && (
-        <Link href={`/accomodations?page=${page + 1}`}>
-          <a>Next</a>
-        </Link>
+        <CustomLink href={`/accomodations?page=${page + 1}`} ChakraComponent={"Button"}>
+          Next page
+        </CustomLink>
       )}
+      </ButtonGroup>
     </>
   );
 }

@@ -2,30 +2,30 @@ import Container from "./Container";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import NavBar from "./NavBar";
-// import { UserProvider } from "../../lib/authContext";
-
+import SubHero from "./SubHero";
+import { UserProvider } from "../../context/authContext";
 
 import { useRouter } from "next/router";
 
-const Layout = ({  user, loading = false, children  }) => {
-const router = useRouter()
+const Layout = ({ user, loading = false, children }) => {
+  const router = useRouter();
 
   return (
     <>
-      {/* <UserProvider value={{ user, loading}}> */}
-      <NavBar />
-      {router.pathname === "/" && <Hero />}
-      <Container>{children}</Container>
-      <Footer />
-      {/* </UserProvider> */}
+      <UserProvider value={{ user, loading }}>
+        <NavBar />
+        {router.pathname === "/" && <Hero />}
+        {router.pathname === "/contact" && <SubHero />}
+        <Container>{children}</Container>
+        <Footer />
+      </UserProvider>
     </>
   );
 };
 
-
 Layout.defaultProps = {
-  title: '',
-  description: '',
-  keywords: '',
-}
+  title: "",
+  description: "",
+  keywords: "",
+};
 export default Layout;

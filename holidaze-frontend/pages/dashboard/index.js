@@ -1,91 +1,83 @@
 import {
-  Button,
-  Center,
-  Container,
   Flex,
-  Heading,
-  Wrap,
-  Tab,
-  TabList,
-  TabPanels,
-  Stack,
-  Tabs,
   Box,
+  Heading,
   Breadcrumb,
   BreadcrumbLink,
   BreadcrumbItem,
-  Spinner,
+  Text,
+  Center,
 } from "@chakra-ui/react";
+import PageHead from "../../components/layout/PageHead";
 import Link from "next/link";
-// import Head from "../../components/layout/Head";
-import RecievedEnquiries from "./enquiries";
-import { useRouter } from "next/router";
-import { useUser, useFetchUser } from "../../lib/authContext";
-import Layout from "../../components/layout/Layout";
-import { getTokenFromServerCookie } from "../../lib/auth";
+import { useUser, useFetchUser } from "../../context/authContext";
+import Layout from "../../components/layout/";
+import { WarningAlert } from "@/components/layout/Alerts";
+import DashboardNav from "@/components/dashboard/DashboardNav";
 
-const MyAccountPage = ({ hotels }) => {
+const Dashboard = () => {
   const { user, loading } = useFetchUser();
-
-  const router = useRouter();
 
   return (
     <>
-      {/* <Head title="My account" /> */}
-      {/* <MyAccountPageComponent /> */}
       <Layout user={user}>
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <BreadcrumbLink as={Link} href={"/"}>
-              <a>Home</a>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink>Dashboard</BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-
-        <Stack align={"center"}>
-          <Box
-            maxW="80vw"
-            mx="auto"
-            px={{ base: "4", md: "8", lg: "12" }}
-            py={{ base: "6", md: "8", lg: "12" }}
-          >
-            {!loading &&
-              (user ? (
-                <Wrap>
-                  <Tabs size="sm" variant="enclosed">
-                    <TabList>
-                      {/* <Tab _selected={{ color: "white", bg: "green.400" }}>Enquires</Tab> */}
-                      <Tab _selected={{ color: "green" }}>
-                        <Link href={`/my-account/enquiries`} passHref>
-                          Enquires
-                        </Link>
-                      </Tab>
-                      <Tab _selected={{ color: "green" }}>
-                        <Link href={`/my-account/email`} passHref>
-                          Messages
-                        </Link>
-                      </Tab>
-                      <Tab _selected={{ color: "green" }}>
-                        <Link href={`/my-account/add`} passHref>
-                          New acommodation
-                        </Link>
-                      </Tab>
-                    </TabList>
-                  </Tabs>
-                </Wrap>
-              ) : (
-                <Heading>
-                  You are not authorized to view the content of this page
-                </Heading>
-              ))}
-          </Box>
-        </Stack>
+        <PageHead title="Dashboard" />
+        {!loading &&
+          (user ? (
+            <>
+              <Flex flexDir={["column", "column", "row"]}>
+                <Flex
+                  w={["100%", "100%", "15%", "15%", "15%"]}
+                  flexDir="column"
+                  alignItems="center"
+                  backgroundColor="brand.accent"
+                  color="body.light"
+                >
+                  <DashboardNav />
+                </Flex>
+                <Flex
+                  w={["100%", "100%", "80%", "80%", "80%"]}
+                  p="3%"
+                  flexDir="column"
+                
+                >
+                  <Breadcrumb py={2}>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink as={Link} href={"/"}>
+                        Home
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem isCurrentPage>
+                      <BreadcrumbLink>Dashboard</BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </Breadcrumb>
+                  <Heading fontWeight="normal" mb={4} letterSpacing="tight" textAlign="center">
+                    Welcome back,{" "}
+                    <Flex display="inline-flex" fontWeight="bold">
+                      {user}
+                    </Flex>
+                  </Heading>
+                  <Box>
+                    <Center>
+                    <Text maxWidth={"380px"} lineHeight="1.4">
+                      Welcome to your admin page. Here you can manage your
+                      incoming enquiries and emails, and also add a new
+                      accomodation to the collection. If you want to edit or
+                      delete one of your current listings, please go to the
+                      specific listing. There you will find links for editing or
+                      deleting.
+                    </Text>
+                    </Center>
+                  </Box>
+                </Flex>
+              </Flex>
+            </>
+          ) : (
+            <WarningAlert />
+          ))}
       </Layout>
     </>
   );
 };
 
-export default MyAccountPage;
+export default Dashboard;

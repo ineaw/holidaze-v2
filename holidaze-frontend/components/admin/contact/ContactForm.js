@@ -2,6 +2,8 @@ import {
   Box,
   Heading,
   Stack,
+  HStack,
+  IconButton,
   Text,
   Button,
   useToast,
@@ -9,14 +11,21 @@ import {
   FormLabel,
   VStack,
   WrapItem,
+  ButtonGroup,
+  Wrap,
+  Center,
 } from "@chakra-ui/react";
+import { MdPhone, MdEmail, MdLocationOn, MdFacebook } from "react-icons/md";
+import { BsGithub, BsDiscord, BsPerson } from "react-icons/bs";
 import axios from "axios";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
-import { API_URL } from "../../../config";
+import { API_URL } from "../../../lib";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import TextField from "../../formComponents/TextField";
+import { TextField } from "../../formComponents/FormFields";
 
 const ContactForm = () => {
   const router = useRouter();
@@ -26,7 +35,6 @@ const ContactForm = () => {
     try {
       const json = JSON.stringify({
         data: values,
-        // jwt: session.jwt,
       });
 
       const response = await axios.post(
@@ -44,11 +52,11 @@ const ContactForm = () => {
         render: () => (
           <Box
             borderRadius={"0.3em"}
-            backgroundColor={"#40916c"}
+            backgroundColor={"green.400"}
             padding="2em"
             mx="auto"
           >
-            <Text color={"black"} fontWeight={"700"}>
+            <Text color={"white"} fontWeight={"700"}>
               Successfully sent!
             </Text>
           </Box>
@@ -77,16 +85,14 @@ const ContactForm = () => {
   };
 
   const validateForm = Yup.object({
-    first_name: Yup.string()
+    name: Yup.string()
       .matches(/^.{1,30}$/gm, "Maximum character reached")
       .required("Firstname is Required"),
-    last_name: Yup.string()
-      .matches(/^.{1,30}$/gm, "Maximum character reached")
-      .required("Lastname is Required"),
     email: Yup.string()
       .email("Must be a valid email")
       .max(255)
       .required("Email is required"),
+    subject: Yup.string().required("This field is requried"),
     message: Yup.string()
       .min(10, "Must be more than 10 characters")
       .required("This field is requried"),
@@ -94,64 +100,105 @@ const ContactForm = () => {
 
   return (
     <>
-      <Flex minH={"100vh"} align={"center"} justify={"center"}>
-        <Stack spacing={8} mx={"auto"} py={12} px={6}>
-          <Stack align={"center"}>
-            <Heading fontSize={"4xl"}>Contact us</Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
-              send us a message
-            </Text>
-          </Stack>
-          <Box rounded={"lg"} boxShadow={"lg"} p={8}>
-            <Stack spacing={4}>
-              <Formik
-                initialValues={{
-                  first_name: "",
-                  last_name: "",
-                  email: "",
-                  message: "",
-                }}
-                validationSchema={validateForm}
-                onSubmit={handleCreate}
-              >
-                {({ isSubmitting, handleSubmit, handleReset }) => {
-                  return (
-                    <Form onSubmit={handleSubmit}>
-                      <WrapItem>
-                        <Box bg="white" color="black" borderRadius="lg">
+      <Flex>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} center="true">
+          <Wrap justify="center">
+            <WrapItem>
+              <Center direction="column">
+                <VStack>
+                  <Heading>Contact Us</Heading>
+                  <Text mt={{ sm: 3, md: 3, lg: 5 }} color="brand.text">
+                    send us a message
+                  </Text>
+                  <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
+                    <VStack spacing={3} alignItems={"center"}>
+                      <Button
+                        size="md"
+                        height="48px"
+                        width="200px"
+                        variant="ghost"
+                        leftIcon={<MdPhone color="black" size="20px" />}
+                      >
+                        +77-66558899
+                      </Button>
+                      <Button
+                        size="md"
+                        height="48px"
+                        width="200px"
+                        variant="ghost"
+                        leftIcon={<MdEmail color="black" size="20px" />}
+                      >
+                        holidaze@mail.us
+                      </Button>
+                      <Button
+                        size="md"
+                        height="48px"
+                        width="200px"
+                        variant="ghost"
+                        leftIcon={<MdLocationOn color="black" size="20px" />}
+                      >
+                        Fløygata 5, Bergen
+                      </Button>
+                    </VStack>
+                  </Box>
+                </VStack>
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Stack spacing={4}>
+                <Formik
+                  initialValues={{
+                    name: "",
+                    email: "",
+                    subject: "",
+                    message: "",
+                  }}
+                  validationSchema={validateForm}
+                  onSubmit={handleCreate}
+                >
+                  {({ isSubmitting, handleSubmit, handleReset }) => {
+                    return (
+                      <Form onSubmit={handleSubmit}>
+                        <Center>
                           <Box m={8} color="#0B0E3F">
                             <VStack spacing={5}>
                               <Box>
                                 <FormLabel>Firstname</FormLabel>
                                 <TextField
-                                  placeholder="name"
-                                  name="first_name"
+                                  placeholder="Firstname"
+                                  name="name"
                                 />
                               </Box>
+
                               <Box>
-                                <FormLabel>Lastname</FormLabel>
-                                <TextField
-                                  placeholder="name"
-                                  name="last_name"
-                                />
-                              </Box>
-                              <Box>
-                                <FormLabel>Mail</FormLabel>
+                                <FormLabel>Email</FormLabel>
                                 <TextField placeholder="Email" name="email" />
                               </Box>
+
+                              <Box>
+                                <FormLabel>Subject</FormLabel>
+                                <TextField
+                                  placeholder="Subject"
+                                  name="subject"
+                                />
+                              </Box>
+
                               <Box>
                                 <FormLabel>Message</FormLabel>
                                 <TextField
-                                  placeholder="message"
+                                  placeholder="Message"
+                                  textbox
                                   name="message"
                                 />
                               </Box>
-                              <Box>
+                              <ButtonGroup spacing={6}>
                                 <Button
                                   variant="solid"
-                                  bg="orange"
-                                  color="white"
-                                  _hover={{}}
+                                  bg="brand.dark"
+                                  color="body.light"
+                                  _hover={{
+                                    bg: "brand.darkhover",
+                                  }}
                                   isLoading={isSubmitting}
                                   disabled={isSubmitting}
                                   loadingText="Submitting"
@@ -159,26 +206,26 @@ const ContactForm = () => {
                                 >
                                   Submit
                                 </Button>
-                              </Box>
-                              <Button
-                                size="sm"
-                                colorScheme="red"
-                                onClick={handleReset}
-                                disabled={isSubmitting}
-                              >
-                                Clear
-                              </Button>
+                                <Button
+                                  variant="outline"
+                                  colorScheme="brand.dark"
+                                  onClick={handleReset}
+                                  isDisabled={isSubmitting}
+                                >
+                                  Clear
+                                </Button>
+                              </ButtonGroup>
                             </VStack>
                           </Box>
-                        </Box>
-                      </WrapItem>
-                    </Form>
-                  );
-                }}
-              </Formik>
-            </Stack>
-          </Box>
-        </Stack>
+                        </Center>
+                      </Form>
+                    );
+                  }}
+                </Formik>
+              </Stack>
+            </WrapItem>
+          </Wrap>
+        </Box>
       </Flex>
     </>
   );

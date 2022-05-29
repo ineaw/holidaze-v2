@@ -1,26 +1,38 @@
 import { extendTheme } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 
+
+
 const fonts = { mono: `'Menlo', monospace` };
 
 const breakpoints = createBreakpoints({
-  sm: "40em",
-  md: "52em",
+  sm: "20em",
+  base: "31em",
+  md: "48em",
   lg: "64em",
   xl: "80em",
 });
 
 const colors = {
   brand: {
-    900: "#1a365d",
+    text: "#2D1F31",
+    dark: "#7F2337",
+    darkhover: "#A8344D",
+    bright: "#E9444C",
+    dull: "#80494C",
+    accent: "#7ca8b4",
+    400: "#00FF00",
+  },
+  body: {
+    900: "#ffc0cb",
     800: "#153e75",
     700: "#2a69ac",
-    green: "#00FF00",
+    600: "#00FF00",
+    light: "#F5F5F0",
   },
 };
 
 const fontSizes = {
-  headerHero: "10rem",
   xxs: "0.8rem",
 };
 
@@ -29,6 +41,24 @@ const theme = extendTheme({
   fontSizes,
   fonts,
   breakpoints,
+  styles: {
+    global: {
+      // styles for the `body`
+      body: {
+        bg: 'body.light',
+        color: 'brand.text',
+        fontWeight: '400',
+        margin: "0",
+      },
+      // styles for the `a`
+      a: {
+        color: 'black.500',
+        _hover: {
+        
+        },
+      },
+    },
+  },
 });
 
 export default theme;

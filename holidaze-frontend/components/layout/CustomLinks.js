@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 export const CustomLink = ({ ChakraComponent, href, children, ...props }) => {
   return (
-    <Nextlink href={href} passHref>
+    <Nextlink href={href}>
       <Link>
        {children}
       </Link>
@@ -12,11 +12,10 @@ export const CustomLink = ({ ChakraComponent, href, children, ...props }) => {
   );
 };
 
-
-export function NavLink({ href, activeProps, children, _hover, ...props }) {
-  const router = useRouter()
-  const isActive = router.pathname === href
-  const color = useColorModeValue('black', 'selected')
+export function CustomNavLink({ href, activeProps, children, _hover, ...props }) {
+  const router = useRouter();
+  const isActive = router.pathname === href;
+  const color = useColorModeValue('brand.text', 'selected');
 
   if (isActive) {
     return (
@@ -26,12 +25,14 @@ export function NavLink({ href, activeProps, children, _hover, ...props }) {
           {...props}
           {...activeProps}
           _hover={{ color: 'selected' }}
-          color={color}>
+          color={color}
+          textUnderlineOffset
+         >
           {children}
         </Link>
       </Nextlink>
-    )
-  }
+    );
+  };
 
   return (
     <Nextlink href={href}>
@@ -40,6 +41,6 @@ export function NavLink({ href, activeProps, children, _hover, ...props }) {
       </Link>
     </Nextlink>
   )
-}
+};
 
 

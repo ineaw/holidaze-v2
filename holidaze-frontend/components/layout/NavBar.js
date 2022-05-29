@@ -4,46 +4,31 @@ import {
   Menu,
   Flex,
   MenuButton,
-  MenuItem,
   MenuList,
   MenuDivider,
-  Stack,
   Button,
   IconButton,
-  Text,
   CloseButton,
-  Container,
-  VStack,
+  Heading,
   Center,
   HStack,
   useBreakpointValue,
-  useColorModeValue,
   useDisclosure,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerBody,
+  Link,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-
-import { CustomLink } from "./CustomLinks";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/router";
-
+import { CustomLink, CustomNavLink } from "./CustomLinks";
+import NextLink from "next/link";
 import { setToken, unsetToken } from "../../lib/auth";
 import { useUser } from "../../context/authContext";
-import { API_URL } from "../../config";
 
 const NavBar = () => {
-  const [data, setData] = useState({
-    identifier: "",
-    password: "",
-  });
-
   const { user, loading } = useUser();
   const mobileNav = useDisclosure();
-  const router = useRouter();
   const linksForAllUsers = [
     {
       id: "home",
@@ -57,80 +42,121 @@ const NavBar = () => {
       href: "/accomodations",
     },
     {
-      id: "contac",
+      id: "contact",
       label: "Contact",
       href: "/contact",
     },
   ];
 
   const linksForAuthenticatedUsers = [
-    {
-      id: "dashboard",
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      id: "profile",
-      label: "Profile",
-      href: "/profile",
-    },
+    // {
+    //   id: "dashboard",
+    //   label: "Dashboard",
+    //   href: "/dashboard",
+    // },
   ];
+
+  const Logo = (_props) => {
+    return <Heading>Holidaze</Heading>;
+  };
 
   const logout = () => {
     unsetToken();
   };
 
   const signOutButton = () => {
-    // if (!loading && !user) {
-    //   return false;
-    // }
+    if (!loading && !user) {
+      return false;
+    }
     return (
       <>
         {!loading &&
           (user ? (
-            <Button>
-              <a onClick={logout}>Logout</a>
+            <Button
+              my={2}
+              size="sm"
+              color={"body.light"}
+              bg={"brand.dark"}
+              _hover={{
+                bg: "brand.darkhover",
+              }}
+              onClick={logout}
+            >
+              Logout
             </Button>
           ) : (
             ""
-          ))}{" "}
+          ))}
       </>
     );
   };
+
+  const userHeading = (
+    <>
+      <Heading
+        as="h5"
+        fontSize="md"
+        fontWeight="normal"
+        mb={4}
+        letterSpacing="tight"
+        textAlign={"center"}
+      >
+        You are logged in as{" "}
+        <Flex display="column" fontWeight="bold">
+          {user}
+        </Flex>
+      </Heading>
+    </>
+  );
 
   const isDesktop = useBreakpointValue({ base: false, md: true, lg: true });
   const MobileNavContent = (
     <>
       <Drawer
-        placement="left"
+        placement="right"
         onClose={mobileNav.onClose}
         isOpen={mobileNav.isOpen}
         size="sm"
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bg="body.light">
           <DrawerBody>
             <CloseButton
               aria-label="Close menu"
               justifySelf="self-start"
               onClick={mobileNav.onClose}
+              size="lg"
             />
-            {linksForAllUsers.map((link) => {
-              return (
-                <Box key={link.id}>
-                  <CustomLink href={link.href} variant="ghost" my={2}>
-                    {link.label}
-                  </CustomLink>
-                </Box>
-              );
-            })}
+            <Flex
+              h="full"
+              flexDirection="column"
+              alignItems="center"
+              mx="8"
+              my="16"
+              justifyContent="flex-start"
+            >
+              {linksForAllUsers.map((link) => {
+                return (
+                  <Box key={link.id}>
+                    <CustomNavLink
+                      fontSize="2xl"
+                      href={link.href}
+                      variant="ghost"
+                      my={2}
+                    >
+                      <Link> {link.label} </Link>
+                    </CustomNavLink>
+                  </Box>
+                );
+              })}
+            </Flex>
             {user &&
               linksForAuthenticatedUsers.map((link) => {
                 return (
                   <Box key={link.id}>
-                    <CustomLink href={link.href} variant="ghost" my={2}>
-                      {link.label}
-                    </CustomLink>
+                    <CustomNavLink href={link.href} variant="ghost" my={2}>
+                      <Link> {link.label} </Link>
+                    </CustomNavLink>
                   </Box>
                 );
               })}
@@ -148,9 +174,9 @@ const NavBar = () => {
             <>
               <HStack spacing={8} alignItems={"center"}>
                 <Box>
-                  <Link href="/" passHref>
-                    <a>Logo</a>
-                  </Link>
+                  <NextLink href="/" passHref>
+                    <Link>Logo </Link>
+                  </NextLink>
                 </Box>
                 <HStack
                   as={"nav"}
@@ -160,7 +186,9 @@ const NavBar = () => {
                   {linksForAllUsers.map((link) => {
                     return (
                       <Box key={link.id}>
-                        <CustomLink href={link.href}>{link.label}</CustomLink>
+                        <CustomNavLink href={link.href}>
+                          <Link> {link.label} </Link>
+                        </CustomNavLink>
                       </Box>
                     );
                   })}
@@ -169,9 +197,9 @@ const NavBar = () => {
                       (link) => {
                         return (
                           <Box key={link.id}>
-                            <CustomLink href={link.href}>
-                              {link.label}
-                            </CustomLink>
+                            <CustomNavLink href={link.href}>
+                              <Link> {link.label} </Link>
+                            </CustomNavLink>
                           </Box>
                         );
                       },
@@ -184,22 +212,8 @@ const NavBar = () => {
                             cursor={"pointer"}
                             minW={0}
                           >
-                            <Avatar name={user} src="https:/" size="sm" />{" "}
+                            <Avatar name={user} size="sm" bg="brand.text" />{" "}
                           </MenuButton>
-                          <MenuList alignItems={"center"}>
-                            <br />
-                            <Center>
-                              <Avatar name={user} src="https://" size="lg" />{" "}
-                            </Center>
-                            <br />
-                            <Center>Hi {user}</Center>
-                            <br />
-                            <MenuDivider />
-                            <MenuItem>
-                              <Link href={"/dashboard"}>My Account</Link>{" "}
-                            </MenuItem>
-                            {signOutButton()}
-                          </MenuList>
                         </Menu>
                       </Flex>
                     )}
@@ -207,40 +221,64 @@ const NavBar = () => {
               </HStack>
               {!loading &&
                 (user ? (
-                  <Flex alignItems={"center"}>
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        rounded={"full"}
-                        variant={"link"}
-                        cursor={"pointer"}
-                        minW={0}
-                      >
-                        <Avatar name={user} src="https:/" size="sm" />{" "}
-                      </MenuButton>
-                      <MenuList alignItems={"center"}>
-                        <br />
-                        <Center>
-                          <Avatar name={user} src="https://" size="lg" />{" "}
-                        </Center>
-                        <br />
-                        <Center>Hi {user}</Center>
-                        <br />
-                        <MenuDivider />
-                        <Link href={"/my-account"}>My Account</Link>{" "}
-                        <Center>
-                          <Box p={2}>{signOutButton()}</Box>
-                        </Center>
-                      </MenuList>
-                    </Menu>
-                  </Flex>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rounded={"full"}
+                      variant={"link"}
+                      cursor={"pointer"}
+                      minW={0}
+                    >
+                      <Avatar name={user} size="sm" bg="brand.dull" />{" "}
+                    </MenuButton>
+                    <MenuList textAlign={"flex-start"} zIndex="5" px={6} py={8}>
+                      {userHeading}
+                      <MenuDivider />
+                      <Box my={2}>
+                        <CustomLink href="/dashboard">Dashboard</CustomLink>{" "}
+                      </Box>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/enquiries" my={6}>
+                          Enquiries
+                        </CustomLink>{" "}
+                      </Box>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/email" my={4}>
+                          Emails
+                        </CustomLink>{" "}
+                      </Box>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/create" my={4}>
+                          Manage listing
+                        </CustomLink>{" "}
+                      </Box>
+                      <MenuDivider />
+                      <Center>{signOutButton()}</Center>
+                    </MenuList>
+                  </Menu>
                 ) : (
                   <>
-                    <Box>
-                      <Link href="/login">
-                        <a>Login</a>
+                    <NextLink href="/dashboard/login">
+                      <Link
+                        w="70px"
+                        display="inline-flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        px={2}
+                        py={1.5}
+                        border="solid transparent"
+                        fontWeight="bold"
+                        fontSize={"sm"}
+                        rounded="md"
+                        color={"body.light"}
+                        bg={"brand.dark"}
+                        _hover={{
+                          bg: "brand.darkhover",
+                        }}
+                      >
+                        Login
                       </Link>
-                    </Box>
+                    </NextLink>
                   </>
                 ))}
             </>
@@ -253,48 +291,73 @@ const NavBar = () => {
                 onClick={mobileNav.onOpen}
               />
               <Box>
-                <Link href={"/"}>Logo</Link>
+                <NextLink href="/" passhref>
+                  <Link>Logo</Link>
+                </NextLink>
               </Box>
-              <Flex alignItems={"center"}>
-                {!loading &&
-                  (user ? (
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        rounded={"full"}
-                        variant={"link"}
-                        cursor={"pointer"}
-                        minW={0}
-                      >
-                        <Avatar name={user} src="https://" size="sm" />
-                      </MenuButton>
-                      <MenuList alignItems={"center"}>
-                        <br />
-                        <Center>
-                          <Avatar name={user} src="https://" size="lg" />{" "}
-                        </Center>
-                        <br />
-                        <Center>
-                          <p>{user}</p>
-                        </Center>
-                        <br />
-                        <MenuDivider />
-                        <Link href={"/my-account"}>My Account</Link>
-                        <Center>
-                          <Box p={2}>{signOutButton()}</Box>
-                        </Center>
-                      </MenuList>
-                    </Menu>
-                  ) : (
-                    <>
-                      <Box>
-                        <Link href="/login">
-                          <a>Login</a>
-                        </Link>
+
+              {!loading &&
+                (user ? (
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rounded={"full"}
+                      variant={"link"}
+                      cursor={"pointer"}
+                      minW={0}
+                    >
+                      <Avatar name={user} bg={"brand.dull"} size="sm" />
+                    </MenuButton>
+                    <MenuList textAlign={"flex-start"} zIndex="5" px={6} py={8}>
+                      {userHeading}
+                      <MenuDivider />
+                      <Box my={2}>
+                        <CustomLink href="/dashboard">Dashboard</CustomLink>{" "}
                       </Box>
-                    </>
-                  ))}
-              </Flex>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/enquiries" my={6}>
+                          Enquiries
+                        </CustomLink>{" "}
+                      </Box>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/email" my={4}>
+                          Emails
+                        </CustomLink>{" "}
+                      </Box>
+                      <Box my={2}>
+                        <CustomLink href="/dashboard/create" my={4}>
+                          Manage listing
+                        </CustomLink>{" "}
+                      </Box>
+                      <MenuDivider />
+                      <Center>{signOutButton()}</Center>
+                    </MenuList>
+                  </Menu>
+                ) : (
+                  <>
+                    <NextLink href="/dashboard/login">
+                      <Link
+                        w="60px"
+                        display="inline-flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        px={2}
+                        py={1.5}
+                        border="solid transparent"
+                        fontWeight="bold"
+                        fontSize={"sm"}
+                        rounded="md"
+                        color={"body.light"}
+                        bg={"brand.dark"}
+                        _hover={{
+                          bg: "brand.darkhover",
+                        }}
+                      >
+                        Login
+                      </Link>
+                    </NextLink>
+                  </>
+                ))}
             </>
           )}
         </Flex>

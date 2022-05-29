@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.active {
+  color: #fff;
+
+}
+
+
+.active-icon {
+  color: #B57295 !important;
+}

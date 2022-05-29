@@ -1,104 +1,148 @@
+import { useRouter } from "next/router";
+import { API_URL } from "lib/index";
+import { useFetchUser } from "@/context/authContext";
+import Layout from "@/components/layout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react";
 import {
-    Heading,
-    Text,
-    Box,
-    Stack,
-    Tab,
-    TabList,
-    Tabs,
-  } from "@chakra-ui/react";
-//   import { useSession } from "next-auth/react";
-  import { useRouter } from "next/router";
-  import { API_URL } from "../../config";
-  import Link from "next/link";
-//   import AdminPanel from "@/components/AdminPanel";
-  
-  const RecievedEnquiries = ({ enquiries }) => {
-    // const { data: session, status } = useSession();
-    const router = useRouter();
-  
-    // if (status === "loading")
-    //   return <Heading>Checking Authentication...</Heading>;
-  
-    // if (!session) {
-    //   setTimeout(() => {
-    //     router.push("/auth/signin");
-    //   }, 5000);
-    //   return (
-    //     <Stack isInline spacing={4} align="center">
-    //       <Heading>You have to be signed in</Heading>
-    //     </Stack>
-    //   );
-    // }
-  
-    return (
-      <>
-        {/* <AdminPanel /> */}
-        <Stack align={"center"}>
-          {/* <Heading>Inbox</Heading>
-          <Tabs size="sm" variant="enclosed">
-            <TabList>
-              {/* <Tab _selected={{ color: "white", bg: "green.400" }}>Enquires</Tab> */}
-          {/* <Tab _selected={{ color: "green" }}>
-                {" "}
-                <Link href={`/dashboard/enquiries`} passHref>
-                  Enquires
-                </Link>
-              </Tab>
-              <Tab _selected={{ color: "green" }}>
-                <Link href={`/dashboard/email`} passHref>
-                  Messages
-                </Link>
-              </Tab>
-              <Tab _selected={{ color: "green" }}>
-                <Link href={`/dashboard/add`} passHref>
-                  New acommodation
-                </Link>{" "}
-              </Tab>
-            </TabList>
-          </Tabs> */}
-  
-          <Box
-            maxW="7xl"
-            mx="auto"
-            px={{ base: "4", md: "8", lg: "12" }}
-            py={{ base: "6", md: "8", lg: "12" }}
-          >
-            {enquiries.length === 0 && <h3>No enquires</h3>}
-            {enquiries.data.map((enq) => (
-              <Box key={enq.id}>
-                <Heading>From: {enq.attributes.email}</Heading>
-                <Text>{enq.attributes.first_name}{" "}{enq.attributes.last_name}</Text>
-                <Text></Text>
-                From: {" "}{new Date(enq.attributes.arrive).toLocaleDateString("no")}{" "}
-                To: {" "}{new Date(enq.attributes.leave).toLocaleDateString("no")} 
-                  {/* {enq.attributes.time} */}
-              </Box>
-            ))}
-          </Box>
-        </Stack>
-      </>
-    );
-  };
-  
-  export async function getStaticProps() {
-    const qs = require("qs");
-    const query = qs.stringify(
-      {
-        populate: "*",
-      },
-      {
-        encodeValuesOnly: true,
+  Flex,
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+} from "@chakra-ui/react";
+import { FiTrash } from "react-icons/fi";
+import DashboardNav from "@/components/dashboard/DashboardNav";
+import PageHead from "@/components/layout/PageHead";
+
+const RecievedEnquiries = ({ enquiries }) => {
+  const router = useRouter();
+  const { user } = useFetchUser();
+
+  const deleteEmail = async (e) => {
+    if (confirm("Are you sure you want to delete this email?")) {
+      const res = await fetch(`${API_URL}/api/contacts/${enquiries.id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error("Could not delete this item");
+      } else {
+        toast.success("Email was deleted successfully");
       }
-    );
-    const accomRes = await fetch(`${API_URL}/api/enquieries?${query}`);
-    const enquiries = await accomRes.json();
-    console.log(enquiries);
-    return {
-      props: { enquiries: enquiries },
-      revalidate: 1,
-    };
-  }
-  
-  export default RecievedEnquiries;
-  
+    }
+  };
+  const DeleteButton = (
+    <>
+      <FiTrash color="red" onClick={deleteEmail} />
+    </>
+  );
+
+  return (
+    <>
+      <Layout user={user}>
+        <PageHead title="Enquiries" />
+        <ToastContainer />
+        <Flex flexDir={["column", "column", "row"]}>
+          <Flex
+            w={["100%", "100%", "20%", "15%", "15%"]}
+            flexDir="column"
+            alignItems="center"
+            backgroundColor="brand.accent"
+            color="body.light"
+          >
+            <DashboardNav />
+          </Flex>
+          <Flex
+            w={["100%", "100%", "80%", "80%", "80%"]}
+            p="3%"
+            flexDir="column"
+            overflow="auto"
+          >
+            <Heading fontWeight="normal" mb={4} letterSpacing="tight">
+              Welcome back,{" "}
+              <Flex display="inline-flex" fontWeight="bold">
+                {user}
+              </Flex>
+            </Heading>
+            <Flex justifyContent="space-between" mt={8}>
+              <Flex align="flex-end">
+                <Heading as="h2" size="lg" letterSpacing="tight">
+                  Inbox
+                </Heading>
+              </Flex>
+            </Flex>
+            <Flex flexDirection="column">
+              <Flex overflow="auto">
+                <Table variant="unstyled" mt={4}>
+                  <Thead>
+                    <Tr color="brand.text">
+                      <Th>Name</Th>
+                      <Th>E-mail</Th>
+                      <Th>Dates</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {enquiries.length === 0 && <h3>No enquires</h3>}
+                    {enquiries.data.map((enq) => (
+                      <Tr key={enq.id}>
+                        <Td>
+                          <Flex align="center">
+                            <Flex flexDirection="column">
+                              <Heading size="sm" letterSpacing="tight">
+                                {enq.attributes.first_name}{" "}
+                                {enq.attributes.last_name}{" "}
+                              </Heading>
+                            </Flex>
+                          </Flex>
+                        </Td>
+                        <Td>{enq.attributes.email}</Td>
+                        <Td>
+                          From:{" "}
+                          {new Date(enq.attributes.arrive).toLocaleDateString(
+                            "no"
+                          )}{" "}
+                          To:{" "}
+                          {new Date(enq.attributes.leave).toLocaleDateString(
+                            "no"
+                          )}
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Layout>
+    </>
+  );
+};
+
+export async function getStaticProps() {
+  const qs = require("qs");
+  const query = qs.stringify(
+    {
+      populate: "*",
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+  const accomRes = await fetch(`${API_URL}/api/enquiries?${query}`);
+  const enquiries = await accomRes.json();
+  console.log(enquiries);
+  return {
+    props: { enquiries: enquiries },
+    revalidate: 1,
+  };
+}
+
+export default RecievedEnquiries;

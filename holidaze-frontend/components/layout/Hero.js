@@ -45,15 +45,13 @@ import {
               textAlign={"center"}
               fontSize={useBreakpointValue({ base: "3xl", md: "5xl" })}
             >
-              Take your next Holdidaze to Bergen
+              Take your next Holidaze to Bergen
             </Heading>
             <Stack maxW={"6xl"} spacing={6} my={18}>
               <Box
                 bg={"white"}
                 p={6}
                 rounded={"10"}
-              
-                // maxW={"90vw"}
                 my={12}
               >
                 <FormLabel textAlign={"center"}> Find your accommodation in Bergen</FormLabel>
@@ -65,8 +63,7 @@ import {
                   px={useBreakpointValue({ base: 4, md: 4 })}
                 >
                   <InputGroup direction={"column"}>
-                    {/* <InputLeftElement color="gray.300"><GrLocation /></InputLeftElement> */}
-                    <Input placeholder="Location" fontSize={"sm"} />
+                    <Input placeholder="Find your stay" fontSize={"sm"} />
                   </InputGroup>
                   <InputGroup>
                     <Input px={2} py={4} fontSize={"sm"} type="date" />
@@ -75,21 +72,22 @@ import {
                     <Input px={2} py={4} fontSize={"sm"} type="date" />
                   </InputGroup>{" "}
                   <Box display="inline-flex" rounded="md" shadow="md">
-                    <NextLink href="/accomodations" passHref>
+                    <NextLink href="/accomodations">
                       <Link
                         w="150px"
                         display="inline-flex"
                         alignItems="center"
                         justifyContent="center"
-                        px={4}
-                        py={2}
+                        px={2}
+                        py={1.5}
                         border="solid transparent"
                         fontWeight="bold"
+                        fontSize={"sm"}
                         rounded="md"
-                        color={useColorModeValue("white")}
-                        bg={useColorModeValue("green.600", "green.500")}
+                        color={"body.light"}
+                        bg={"brand.dark"}
                         _hover={{
-                          bg: useColorModeValue("brand.700", "brand.600"),
+                          bg: ("brand.darkhover"),
                         }}
                       >
                         Get started

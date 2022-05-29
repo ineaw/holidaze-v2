@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getUserFromLocalCookie } from '../lib/auth';
 
-
 let userState;
 
 const User = createContext({ user: null, loading: false });
