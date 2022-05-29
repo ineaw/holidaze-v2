@@ -24,8 +24,7 @@ export default function AccomodationCard({ accom }) {
         p={4}
         borderRadius={useBreakpointValue({ base: "sm", md: "md" })}
       >
-        <LinkBox as="article" position="relative">
-          <Box position="relative">
+        <Box as="article" position="relative">
             <AspectRatio ratio={4 / 3}>
               <Image
                 src={
@@ -63,7 +62,6 @@ export default function AccomodationCard({ accom }) {
             </Box>
             <Link href={`/accomodations/${accom.slug}`}>View details</Link>
           </Box>
-        </LinkBox>
       </Stack>
     </>
   );

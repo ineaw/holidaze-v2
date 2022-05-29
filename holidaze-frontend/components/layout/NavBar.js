@@ -312,21 +312,27 @@ const NavBar = () => {
                       {userHeading}
                       <MenuDivider />
                       <Box my={2}>
-                        <CustomLink href="/dashboard">Dashboard</CustomLink>{" "}
+                        <CustomLink href="/dashboard" passhref>Dashboard</CustomLink >{" "}
                       </Box>
                       <Box my={2}>
-                        <CustomLink href="/dashboard/enquiries" my={6}>
+                        <CustomLink href="/dashboard/enquiries" my={6} passhref>
+                          <Link>
                           Enquiries
+                          </Link>
                         </CustomLink>{" "}
                       </Box>
                       <Box my={2}>
-                        <CustomLink href="/dashboard/email" my={4}>
+                        <CustomLink href="/dashboard/email" my={4} passhref>
+                          <Link>
                           Emails
+                          </Link>
                         </CustomLink>{" "}
                       </Box>
                       <Box my={2}>
-                        <CustomLink href="/dashboard/create" my={4}>
+                        <CustomLink href="/dashboard/create" my={4} passhref>
+                          <Link>
                           Manage listing
+                          </Link>
                         </CustomLink>{" "}
                       </Box>
                       <MenuDivider />
@@ -335,7 +341,7 @@ const NavBar = () => {
                   </Menu>
                 ) : (
                   <>
-                    <NextLink href="/dashboard/login">
+                    <NextLink href="/dashboard/login" passhref>
                       <Link
                         w="60px"
                         display="inline-flex"

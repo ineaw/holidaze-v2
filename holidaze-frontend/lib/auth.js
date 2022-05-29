@@ -1,7 +1,9 @@
 import Router from 'next/router';
 import Cookies from 'js-cookie';
 import { fetcher } from './api';
-import { API_URL } from '.';
+import { API_URL } from 'lib';
+
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
