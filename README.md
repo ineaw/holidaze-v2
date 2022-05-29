@@ -1,6 +1,6 @@
 
 Username: admin 
-( can also login with admikn@holidaze.no )
+( can also login with admin@holidaze.no )
 Password: Pass5678
 
 # Project Exam 2
