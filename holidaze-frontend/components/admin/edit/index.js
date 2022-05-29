@@ -108,7 +108,7 @@ export default function EditAccomPage({ accomodation }) {
       </Box>
       <ToastContainer />
       <Container centerContent>
-        <Heading as="h1" my={8} letterSpacing="tight">
+        <Heading as="h1" my={8}>
           Edit {accomodation.data.attributes.name}
         </Heading>
         <Flex
@@ -189,7 +189,7 @@ export default function EditAccomPage({ accomodation }) {
                         <InputRightElement children="NOK" />
                       </NumberInput>
                     </Box>
-                  </Flex>{" "}
+                  </Flex>
                   <Box>
                     <FormLabel>Facilities</FormLabel>
                     <TextField placeholder="Facilities" name="facilities" />

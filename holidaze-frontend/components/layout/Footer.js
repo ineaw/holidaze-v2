@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Logo = (_props) => {
   return <Image
-  src="/images/logo-holidaze-dark.png"
+  src="/images/logo.png"
   height={"60px"}
-  width={"170px"}
+  width={"190px"}
 />
 };
 

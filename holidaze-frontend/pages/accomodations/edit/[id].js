@@ -1,21 +1,3 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Image from "next/image";
-import {
-  Box,
-  Flex,
-  Avatar,
-  Button,
-  FormControl,
-  FormLabel,
-  Stack,
-  Icon,
-  chakra,
-  VisuallyHidden,
-  useColorModeValue,
-  Text,
-} from "@chakra-ui/react";
 import Layout from "@/components/layout/index";
 import { API_URL } from "../../../lib";
 import PageHead from "@/components/layout/PageHead";

@@ -106,7 +106,7 @@ const ContactForm = () => {
             <WrapItem>
               <Center direction="column">
                 <VStack>
-                  <Heading>Contact Us</Heading>
+                  <Heading fontFamily="sans" textAlign="center">Contact Us</Heading>
                   <Text mt={{ sm: 3, md: 3, lg: 5 }} color="brand.text">
                     send us a message
                   </Text>

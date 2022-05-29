@@ -176,7 +176,7 @@ const NavBar = () => {
                   <NextLink href="/" passHref>
                     <Link>
                     <Image
-                      src="/images/logo-holidaze.png"
+                      src="/images/logo.png"
                       height={"40px"}
                       width={"full"}
                     />{" "}
@@ -299,7 +299,7 @@ const NavBar = () => {
               <NextLink href="/" passHref>
                     <Link>
                     <Image
-                      src="/images/logo-holidaze.png"
+                      src="/images/logo.png"
                       height={"40px"}
                       width={"full"}
                     />{" "}

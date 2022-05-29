@@ -108,5 +108,3 @@ export const getIdFromServerCookie = (req) => {
   return id;
 };
 
-
-// from strapi tutorial
