@@ -1,5 +1,6 @@
 # Project Exam 2
 
+![projex2](https://user-images.githubusercontent.com/70141648/173236680-03255a1a-2de3-4a08-8e86-3b6245122c16.png)
 
 ## Goal
 To take the skills learned over the last two years and take on an extensive project where the finished product should reflect the candidate's general development capabilities, in addition to visual and technical skills.
