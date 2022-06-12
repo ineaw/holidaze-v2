@@ -1,53 +1,10 @@
-
-Username: admin 
-( can also login with admin@holidaze.no )
-Password: Pass5678
-
 # Project Exam 2
-There are two options with this Project Exam. 
-You need to only choose one and please follow the deliveries carefully.
+
 
 ## Goal
 To take the skills learned over the last two years and take on an extensive project where the finished product should reflect the candidate's general development capabilities, in addition to visual and technical skills.
 
 ## Brief
-For this assignment you have the choice between getting a real world client that you will manage and build a website for, or a case study to make a hotel booking website.
-
-Whatever project you choose, the final submission must have the following:
-- A Gantt chart planning the project
-- A style guide
-- An Adobe XD prototype
-- Use a CSS Pre-processor and BEM if not using CSS Modules, Styled Components, etc
-- Use a React.js or Next.js
-- You can use regular JS or TypeScript
-- Please use create-react-app or create-next-app to generate a skeleton project for yourself
-- A fully working website that fulfils the brief
-
-## Option 1: Real World Client
-Make a website or application for a real world client. The project should offer a significant enough scope to be able to show off your skills as a developer, and hopefully the project can form a central part of your portfolio for when you start applying for jobs.
-
-The process followed for the project will differ depending on the client and the requirements of their project.
-
-Note: The project has to have a big enough scope to show off the skills learned over your studies. An example of the level we’re expecting would be a website where administrators can add, update, remove products, and users can search, filter, and contact administrators. If you are unsure if your potential client’s brief is strong enough for the Project Exam 2, please message your tutors. Use of a JavaScript Framework is a requirement.
-
-### Recommended Process
-Week 1 to 3:  Finding client, Planning and Design
-Week 4 to 6: Coding
-Week 7: Bug Fixing
-
-### Level 1 Process
-- Use your networks and connections to find a client that needs a website or application built.
-- Understand their requirements and come up with a functional specification for the project. You can write the functional specification using “System shall” statements. For example, “The system shall allow visitors to search for an article”
-- Create a Gantt chart for the project, planning out your deliverables for the client.
-- Make a design style guide and then take this style guide and create an Adobe XD prototype. Present to the client for feedback.
-- Develop the site ensuring you deliver all that is listed in your functional specification.
-- Test the website on various platforms and browsers. Ensure the site is bug-free and working before presenting to the client.
-- Go through a final round of changes before going live with the website.
-- Write a report on your process and decisions for the project. Please use the report template provided.
-
-### Submission
-End of week 3: Functional specification, Gantt chart, style guide, and Adobe XD prototype
-End of week 7: Report with link to website, and all files in a compressed ZIP
 
 ## Option 2: Hotel Booking Website
 A local tourism agency in Bergen is launching a new website called ‘Holidaze’ for visitors to the area to be able to find hotels, B&Bs and guesthouses, and for the accommodation owners to receive enquiries.
@@ -72,24 +29,78 @@ You will need to create an API to store the data for the establishments, enquiri
 - List of messages from contact form
 - The admin can create a new establishment
 
-### Recommended Process
-Week 1 and 2:  Planning and Design
-Week 3 to 6: Coding
-Week 7: Bug Fixing
 
-### Level 1 Process
-- Start by planning out the project. 
-- Next begin your research of likely users and browse competitor websites for ideas.
-- Create a style guide
-- Build an Adobe XD prototype (or you can use Sketch or Figma).
-- Start coding. 
-- Once you’ve finished development, start looking for bugs and ensure the site functions well on all viewports. Test the code on different devices. Because your API is public, the code shouldn’t rely on a local API.
-- Refactor your code.
-- Ask another student to look over your code and ask them if they can see how it might be better implemented. This is important to get an outside view on your code. Please attach this feedback to your report.
-- Add the login details for your admin side at the top of this README.md file so that it's easy for the marker to spot.
 
-### Submission
-End of week 7: Report with link to website or a Github link and feedback from code review, and all files in a compressed ZIP. Login details added to the README.md.
+Create an e-commerce website that has both customer-facing and admin sections. 
+Both sections should be responsive and the website will be populated by a Strapi API supplied by Noroff.
 
-### Resources
-Report template included in the repo.
+## Description
+
+
+- Build a frontend with home, product list, product detail and cart pages.
+
+- Build admin pages to create, update and delete products.
+
+- The website must be responsive on all devices.
+
+- Building a checkout and payment system is not a part of the project.
+
+
+## Built With
+
+
+## Built With
+
+[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+
+[![Chakra](https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white)](https://chakra-ui.com/)
+
+
+## Getting Started
+
+### Installing
+
+To run locally you must
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/Noroff-FEU-Assignments/project-exam-2-ineaw.git
+```
+
+2. Install the dependencies:
+
+
+```
+yarn install
+```
+
+### Running
+
+
+To run the app:
+
+Open up the intergrated terminal in the folder: holidaze-frontend
+
+then run the following command:
+
+```bash
+yarn dev
+```
+Navigate to http://localhost:3000
+
+User credentials<br/>
+Username: admin 
+( can also login with admin@holidaze.no )
+Password: Pass5678
+
+
+## Contact
+
+Find me on:
+
+[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?logo=Twitter&logoColor=white)](https://twitter.com/ineaw) 
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/ine-austreim)
+
+
